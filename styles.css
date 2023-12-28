@@ -17,14 +17,21 @@
     flex-direction: column;
     min-width: 750px;
     height: 800px;
+    border: 10px solid grey;
 
 }
 
+.currentEquation{
+    background-color: #FFFFFF;
+    text-align: end;
+}
+
 .calcDisplay{
-    flex: 1 0;
+    padding-top: 30px;
     min-height: 50px;
     background-color:#FFFFFF;
     text-align: end;
+    font-size: 42px;
 }
 
 .btnRow{
