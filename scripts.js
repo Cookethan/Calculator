@@ -2,7 +2,7 @@
 let firstOperand = ''
 let operator = null
 let secondOperand = ''
-let lastResult = ''
+let isMidEquation = false
 //display query selectors
 const currentEquation = document.querySelector('.currentEquation')
 const calcDisplay = document.querySelector('.calcDisplay')
@@ -44,6 +44,7 @@ function clearDisplays(){
     firstOperand = ''
     secondOperand = ''
     operator = null
+    isMidEquation = false
 }
 
 function updateDisplay(){
@@ -55,6 +56,10 @@ function updateEquation(){
 }
 
 function calculateEquation(firstOperand, operator, secondOperand){
+    if(operator == null){
+        alert('you broke it, press clear to reset')
+        return
+    }
     let result
     firstOperand = Number(firstOperand)
     secondOperand = Number(secondOperand)
@@ -79,6 +84,7 @@ function cleanEquation(lastResult){
     firstOperand = lastResult
     operator = null
     secondOperand = ''
+    isMidEquation = true
 }
 
 CLEARDISPLAY.addEventListener('click', ()=>{
@@ -88,9 +94,8 @@ CLEARDISPLAY.addEventListener('click', ()=>{
 
 numBtns.forEach((btn)=>{
     btn.addEventListener('click', ()=>{
-        operator == null ? firstOperand += btn.textContent : secondOperand += btn.textContent;
+            operator == null ? firstOperand += btn.textContent : secondOperand += btn.textContent;
         updateDisplay()
-        console.log(firstOperand)
     })
 })
 
