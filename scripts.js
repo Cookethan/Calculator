@@ -2,7 +2,7 @@
 let firstOperand = ''
 let operator = null
 let secondOperand = ''
-
+let lastResult = ''
 //display query selectors
 const currentEquation = document.querySelector('.currentEquation')
 const calcDisplay = document.querySelector('.calcDisplay')
@@ -25,6 +25,9 @@ const addBtn = document.querySelector('.addBtn')
 const subBtn = document.querySelector('.subBtn')
 const mulBtn = document.querySelector('.mulBtn')
 const divBtn = document.querySelector('.divBtn')
+
+const operatorArray = [addBtn, subBtn, mulBtn, divBtn]
+
 const equalBtn = document.querySelector('.equalBtn')
 
 const CLEARDISPLAY = document.querySelector('.clearDisplay')
@@ -38,18 +41,46 @@ const CLEARDISPLAY = document.querySelector('.clearDisplay')
 function clearDisplays(){
     calcDisplay.textContent = '0'
     currentEquation.textContent = '0'
-    console.log('clearDisplays called')
+    firstOperand = ''
+    secondOperand = ''
+    operator = null
 }
 
 function updateDisplay(){
-    calcDisplay.textContent = firstOperand
+    operator == null ? calcDisplay.textContent = firstOperand : calcDisplay.textContent = secondOperand
 }
 
 function updateEquation(){
-    currentEquation.textContent = `${firstOperand}${operator}`
+   operator == null ? currentEquation.textContent = `${firstOperand}` : currentEquation.textContent = `${firstOperand}${operator}`
 }
 
-// CLEARDISPLAY.onclick = clearDisplay()
+function calculateEquation(firstOperand, operator, secondOperand){
+    let result
+    firstOperand = Number(firstOperand)
+    secondOperand = Number(secondOperand)
+    switch(operator){
+        case '+':
+            result = firstOperand + secondOperand
+            break;
+        case '-':
+            result = firstOperand - secondOperand
+            break;
+        case '*':
+            result = firstOperand * secondOperand
+            break;
+        case '/':
+            result = firstOperand / secondOperand
+            break;
+    }
+    cleanEquation(result)
+}
+
+function cleanEquation(lastResult){
+    firstOperand = lastResult
+    operator = null
+    secondOperand = ''
+}
+
 CLEARDISPLAY.addEventListener('click', ()=>{
     clearDisplays()
 })
@@ -61,4 +92,18 @@ numBtns.forEach((btn)=>{
         updateDisplay()
         console.log(firstOperand)
     })
+})
+
+operatorArray.forEach((btn)=>{
+    btn.addEventListener('click', ()=>{
+        operator == null ? operator = btn.textContent : console.log('error')
+        updateEquation()
+        console.log('operator click') 
+    })
+})
+
+equalBtn.addEventListener('click', ()=>{
+   calculateEquation(firstOperand, operator, secondOperand)
+   updateDisplay()
+   updateEquation()
 })
